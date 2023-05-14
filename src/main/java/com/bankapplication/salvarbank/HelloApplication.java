@@ -23,6 +23,7 @@ public class HelloApplication extends Application {
         root.getChildren().addAll(text, button);
         Scene scene = new Scene(root, 350, 300);
         stage.setScene(scene);
+        stage.setTitle("JavaFX Application");
         stage.show();
     }
 
