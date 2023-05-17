@@ -37,6 +37,11 @@
 }
 
 /* Login Form Styles */
+
+#choice-prompt-text {
+    -fx-font-weight: 400;
+}
+
 .login_form_container {
     -fx-spacing: 15;
     -fx-font-weight: bold;
