@@ -1,6 +1,8 @@
 package com.bankapplication.salvarbank.Views;
 
 import com.bankapplication.salvarbank.Controllers.Client.ClientController;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -11,10 +13,17 @@ import java.io.IOException;
 
 public class ViewFactory {
     //client
+    private final StringProperty clientSelectedMenuItem;
     private AnchorPane dashboardView;
     private AnchorPane transactionsView;
 
-    public ViewFactory(){}
+    public ViewFactory(){
+        this.clientSelectedMenuItem = new SimpleStringProperty("");
+    }
+
+    public StringProperty getClientSelectedMenuItem() {
+        return clientSelectedMenuItem;
+    }
 
     public AnchorPane getDashboardView() {
         if(dashboardView == null) {
