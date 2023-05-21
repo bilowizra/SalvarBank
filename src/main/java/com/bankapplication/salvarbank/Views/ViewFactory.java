@@ -1,5 +1,6 @@
 package com.bankapplication.salvarbank.Views;
 
+import com.bankapplication.salvarbank.Controllers.Admin.AdminController;
 import com.bankapplication.salvarbank.Controllers.Client.ClientController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -16,16 +17,23 @@ public class ViewFactory {
     private final StringProperty clientSelectedMenuItem;
     private AnchorPane dashboardView;
     private AnchorPane transactionsView;
-
     private AnchorPane accountsView;
 
+    //ADMIN
+
+    private final StringProperty adminSelectedMenuItem;
+    private AnchorPane createClientView;
+
     public ViewFactory(){
+
         this.clientSelectedMenuItem = new SimpleStringProperty("");
+        this.adminSelectedMenuItem = new SimpleStringProperty("");
     }
 
     //client Sections
 
     public StringProperty getClientSelectedMenuItem() {
+
         return clientSelectedMenuItem;
     }
 
@@ -63,15 +71,46 @@ public class ViewFactory {
         return accountsView;
     }
 
+    //Admin Section
+
+    public StringProperty getAdminSelectedMenuItem(){
+        return adminSelectedMenuItem;
+    }
+
+
+    public AnchorPane getCreateClientView() {
+        if(createClientView == null){
+            try{
+                createClientView = new FXMLLoader(getClass().getResource("/Fxml/Admin/CreateClient.fxml")).load();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return createClientView;
+    }
+
+    //Login
+
     public void showLoginWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Login.fxml"));
         createStage(loader);
     }
 
+    //Client
+
     public void showClientWindow(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Client/Client.fxml"));
         ClientController clientController = new ClientController();
         loader.setController(clientController);
+        createStage(loader);
+    }
+
+    //Admin
+
+    public void showAdminWindow(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Admin/Admin.fxml"));
+        AdminController adminController= new AdminController();
+        loader.setController(adminController);
         createStage(loader);
     }
 
