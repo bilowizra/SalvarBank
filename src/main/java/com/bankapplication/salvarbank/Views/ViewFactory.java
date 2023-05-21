@@ -2,8 +2,8 @@ package com.bankapplication.salvarbank.Views;
 
 import com.bankapplication.salvarbank.Controllers.Admin.AdminController;
 import com.bankapplication.salvarbank.Controllers.Client.ClientController;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -13,26 +13,40 @@ import javax.xml.namespace.QName;
 import java.io.IOException;
 
 public class ViewFactory {
+
+    private AccountType loginAccountType;
+
+
     //client
-    private final StringProperty clientSelectedMenuItem;
+    private final ObjectProperty<ClientMenuOptions> clientSelectedMenuItem;
     private AnchorPane dashboardView;
     private AnchorPane transactionsView;
     private AnchorPane accountsView;
 
     //ADMIN
 
-    private final StringProperty adminSelectedMenuItem;
+    private final ObjectProperty<AdminMenuOptions> adminSelectedMenuItem;
     private AnchorPane createClientView;
+    private AnchorPane clientsView;
 
     public ViewFactory(){
 
-        this.clientSelectedMenuItem = new SimpleStringProperty("");
-        this.adminSelectedMenuItem = new SimpleStringProperty("");
+        this.loginAccountType = AccountType.CLIENT;
+        this.clientSelectedMenuItem = new SimpleObjectProperty<>();
+        this.adminSelectedMenuItem = new SimpleObjectProperty<>();
+    }
+
+    public AccountType getLoginAccountType() {
+        return loginAccountType;
+    }
+
+    public void setLoginAccountType(AccountType loginAccountType) {
+        this.loginAccountType = loginAccountType;
     }
 
     //client Sections
 
-    public StringProperty getClientSelectedMenuItem() {
+    public ObjectProperty<ClientMenuOptions> getClientSelectedMenuItem() {
 
         return clientSelectedMenuItem;
     }
@@ -73,7 +87,7 @@ public class ViewFactory {
 
     //Admin Section
 
-    public StringProperty getAdminSelectedMenuItem(){
+    public ObjectProperty<AdminMenuOptions> getAdminSelectedMenuItem(){
         return adminSelectedMenuItem;
     }
 
@@ -87,6 +101,17 @@ public class ViewFactory {
             }
         }
         return createClientView;
+    }
+
+    public AnchorPane getClientsView(){
+        if (clientsView == null){
+            try{
+                clientsView = new FXMLLoader(getClass().getResource("/Fxml/Admin/Clients.fxml")).load();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return clientsView;
     }
 
     //Login
