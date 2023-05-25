@@ -1,8 +1,6 @@
 package com.bankapplication.salvarbank.Models;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DatabaseDriver {
 
@@ -14,5 +12,21 @@ public class DatabaseDriver {
         } catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    /*
+    * Client Section
+    * */
+
+    public ResultSet getClientData(String pAddress, String password) {
+        Statement statement;
+        ResultSet resultSet = null;
+        try {
+            statement = this.conn.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Clients WHERE PayeeAddress='"+pAddress+"' AND Password='"+password+"';");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return resultSet;
     }
 }
