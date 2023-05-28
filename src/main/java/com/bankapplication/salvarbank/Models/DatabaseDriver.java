@@ -81,4 +81,18 @@ public class DatabaseDriver {
             e.printStackTrace();
         }
     }
+
+    public int getLastClientsId() {
+        Statement statement;
+        ResultSet resultSet;
+        int id = 0;
+        try {
+            statement = this.conn.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM sqlite_sequence WHERE name='Clients';");
+            id = resultSet.getInt("seq");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return id;
+    }
 }
