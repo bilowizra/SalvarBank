@@ -26,5 +26,12 @@ public class ClientCellController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        fName_lbl.textProperty().bind(client.firstNameProperty());
+        lName_lbl.textProperty().bind(client.lastNameProperty());
+        pAddress_lbl.textProperty().bind(client.pAddressproperty());
+        ch_acc_lbl.textProperty().bind(client.CheckingAccountProperty().asString());
+        sv_acc_lbl.textProperty().bind(client.SavingAccountProperty().asString());
+        date_lbl.textProperty().bind(client.dateProperty().asString());
+
     }
 }

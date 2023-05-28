@@ -20,7 +20,7 @@ public class ClientsController implements Initializable {
     }
 
     private void initData() {
-        if(Model.getInstance().getClients().isEmpty()){
+       if(Model.getInstance().getClients().isEmpty()){
             Model.getInstance().setClients();
         }
     }
