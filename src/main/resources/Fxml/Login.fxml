@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.PasswordField?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="login_container" stylesheets="@../Styles/login.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bankapplication.salvarbank.Controllers.LoginController">
    <VBox prefHeight="400.0" prefWidth="200.0" styleClass="login_logo_container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
       <FontAwesomeIconView glyphName="BANK" size="30" />
@@ -20,7 +21,7 @@
       <Label fx:id="payee_address_lbl" text="Payee Adress:" />
       <TextField fx:id="payee_address_fld" styleClass="input_field" />
       <Label text="Password" />
-      <TextField fx:id="password_fld" layoutX="10.0" layoutY="70.0" styleClass="input_field" />
+      <PasswordField fx:id="password_fld" layoutX="10.0" layoutY="70.0" styleClass="input_field" />
       <Button fx:id="login_btn" mnemonicParsing="false" prefHeight="32.0" prefWidth="361.0" text="Login" />
       <Label fx:id="error_lbl" styleClass="error_lbl" />
    </VBox>

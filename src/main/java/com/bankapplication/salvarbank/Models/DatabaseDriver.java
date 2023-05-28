@@ -29,4 +29,20 @@ public class DatabaseDriver {
         }
         return resultSet;
     }
+
+    /*
+     * Admin Section
+     * */
+
+    public ResultSet getAdminData(String username, String password) {
+        Statement statement;
+        ResultSet resultSet = null;
+        try {
+            statement = this.conn.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Admins WHERE Username='"+username+"' AND Password='"+password+"';");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
 }

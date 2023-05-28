@@ -34,6 +34,6 @@
       <Label layoutX="10.0" layoutY="204.0" text="Saving Account Balance:"/>
       <TextField fx:id="sv_amount_fld" layoutX="10.0" layoutY="221.0"/>
       <Button fx:id="create_client_btn" mnemonicParsing="false" text="Create New Client"/>
-      <Label fx:id="error_lbl" layoutX="10.0" layoutY="168.0" styleClass="error_lbl" text="Error:"/>
+      <Label fx:id="error_lbl" layoutX="10.0" layoutY="168.0" styleClass="error_lbl" />
    </VBox>
 </AnchorPane>
