@@ -1,10 +1,16 @@
 package com.bankapplication.salvarbank.Controllers.Client;
 
+import com.bankapplication.salvarbank.Models.Model;
+import com.bankapplication.salvarbank.Models.Transaction;
+import com.bankapplication.salvarbank.Views.TransactionCellFactory;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -16,14 +22,77 @@ public class DashboardController implements Initializable {
     public Label savings_acc_num;
     public Label income_lbl;
     public Label expense_lbl;
-    public ListView transaction_listview;
+    public ListView <Transaction> transaction_listview;
     public TextField payee_fld;
-    public TextField amuont_fld;
+    public TextField amount_fld;
     public TextArea message_fld;
     public Button send_money_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        bindData();
+        initLatestTransactionsList();
+        transaction_listview.setItems(Model.getInstance().getLatestTransactions());
+        transaction_listview.setCellFactory(e -> new TransactionCellFactory());
+        send_money_btn.setOnAction(event -> OnSendMoney());
+        accountSummary();
+    }
 
+    private void bindData(){
+        user_name.textProperty().bind(Bindings.concat("Hi, ").concat(Model.getInstance().getClient().firstNameProperty()));
+        login_date.setText("Today, "+ LocalDate.now());
+        checking_bal.textProperty().bind(Model.getInstance().getClient().CheckingAccountProperty().get().balanceProperty().asString());
+        checking_acc_num.textProperty().bind(Model.getInstance().getClient().CheckingAccountProperty().get().accountNumberProperty());
+        savings_bal.textProperty().bind(Model.getInstance().getClient().SavingAccountProperty().get().balanceProperty().asString());
+        savings_acc_num.textProperty().bind(Model.getInstance().getClient().SavingAccountProperty().get().accountNumberProperty());
+    }
+
+    private void initLatestTransactionsList() {
+        if(Model.getInstance().getLatestTransactions().isEmpty()){
+            Model.getInstance().setLatestTransactions();
+        }
+    }
+
+    private void OnSendMoney(){
+        String receiver = payee_fld.getText();
+        double amount = Double.parseDouble(amount_fld.getText());
+        String message = message_fld.getText();
+        String sender = Model.getInstance().getClient().pAddressproperty().get();
+        ResultSet resultSet = Model.getInstance().getDatabaseDriver().searchClient(receiver);
+        try{
+            if(resultSet.isBeforeFirst()){
+                Model.getInstance().getDatabaseDriver().updateBalance(receiver, amount,"ADD");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        //Subtract from sender's Savings Acoount
+        Model.getInstance().getDatabaseDriver().updateBalance(sender, amount, "SUB");
+        //Uppdate the Saving Account Balance in the client object
+        Model.getInstance().getClient().SavingAccountProperty().get().setBalance(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(sender));
+        //Record new transaction
+        Model.getInstance().getDatabaseDriver().newTransaction(sender, receiver, amount, message);
+        //Clear the fields
+        payee_fld.setText("");
+        amount_fld.setText("");
+        message_fld.setText("");
+    }
+    //method calculates all expenses and income
+    private void accountSummary(){
+        double income = 0;
+        double expenses = 0;
+        if(Model.getInstance().getAllTransactions().isEmpty()){
+            Model.getInstance().setAllTransactions();
+        }
+        for(Transaction transaction: Model.getInstance().getAllTransactions()){
+            if (transaction.senderProperty().get().equals(Model.getInstance().getClient().pAddressproperty().get())){
+                expenses = expenses + transaction.amountProperty().get();
+            }else{
+                income = income + transaction.amountProperty().get();
+            }
+        }
+        income_lbl.setText("+ $" + income);
+        expense_lbl.setText("- $" + expenses);
     }
 }

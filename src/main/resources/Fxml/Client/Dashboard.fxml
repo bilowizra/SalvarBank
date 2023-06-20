@@ -60,7 +60,7 @@
       <Label text="Payee Adress:" />
       <TextField fx:id="payee_fld" />
       <Label text="Amount in Lira:" />
-      <TextField fx:id="amuont_fld" />
+      <TextField fx:id="amount_fld" />
       <Label text="Message: (Optional)" />
       <TextArea fx:id="message_fld" prefHeight="70.0" prefWidth="200.0" />
       <Button fx:id="send_money_btn" mnemonicParsing="false" text="Send Money" />
