@@ -13,11 +13,11 @@ public class Transaction {
 
 
     public Transaction(String sender, String receiver, double amount, LocalDate date, String message){
-        this.sender = new SimpleStringProperty(this,"sender", sender);
-        this.receiver = new SimpleStringProperty(this, "receiver", receiver);
-        this.amount = new SimpleDoubleProperty(this,"amount", amount);
-        this.date = new SimpleObjectProperty<>(this,"date", date);
-        this.message = new SimpleStringProperty(this,"message", message);
+        this.sender = new SimpleStringProperty(this,"Sender", sender);
+        this.receiver = new SimpleStringProperty(this, "Receiver", receiver);
+        this.amount = new SimpleDoubleProperty(this,"Amount", amount);
+        this.date = new SimpleObjectProperty<>(this,"Date", date);
+        this.message = new SimpleStringProperty(this,"Message", message);
     }
 
     public StringProperty senderProperty(){
